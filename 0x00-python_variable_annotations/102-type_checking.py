@@ -2,10 +2,11 @@
 '''
 annotatade module
 '''
-from typing import Sequence, Any
+from typing import Tuple, List, Type, Dict, Union
 
 
-def zoom_array(lst: Sequence[Any], factor: int = 2) -> Sequence[Any]:
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    '''zoom @rray'''
     zoomed_in = [
         item for item in lst
         for i in range(factor)
