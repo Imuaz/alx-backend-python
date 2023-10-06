@@ -8,7 +8,7 @@ T = typing.TypeVar('T')
 
 
 def safely_get_value(
-        dct: typing.Mapping, key : typing.Any, default:typing.Union[T, None] =
+        dct: typing.Mapping, key: typing.Any, default: xtyping.Union[T, None] =
         None) -> typing.Union[typing.Any, T]:
     ''''annotated function'''
     if key in dct:
