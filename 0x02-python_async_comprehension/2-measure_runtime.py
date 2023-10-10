@@ -3,13 +3,12 @@
 Measure run time module
 '''
 import asyncio
-from typing import List
 import time
 async_comprehension = __import__('1-async_comprehension').async_comprehension
 
 
 async def measure_runtime() -> float:
-    ''' function measures the total runtime and return it.'''
+    ''' function measures the total runtime and returns it.'''
     tasks = [async_comprehension() for _ in range(4)]
 
     start_time = time.time()
