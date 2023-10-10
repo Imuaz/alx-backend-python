@@ -49,7 +49,7 @@ In summary, the project provided a comprehensive understanding of asynchronous p
 - [4-tasks.py](./4-tasks.py): A modified [wait_n](./1-concurrent_coroutines.py) function `task_wait_n` that calls `task_wait_random`.
   - it nearly identical to `wait_n` except [task_wait_random](./3-tasks.py) is being called.
 
-## Helper files:raise_hand:
+## Helper files:raised_hands:
 - [tests](./tests): A directory that contain main files for testing purpose
 
 :+1:

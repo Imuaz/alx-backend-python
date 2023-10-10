@@ -38,8 +38,7 @@ These topics are crucial for developing efficient and maintainable asynchronous 
 - [2-measure_runtime.py](./2-measure_runtime.py): A coroutine that imports `async_comprehension` and executes it four times in parallel using `asyncio.gather`.
   - it measures the total runtime which is roughly 10 seconds and returns it.
 
-##Helper files:raise_hand:
+## Helper files:raised_hands:
 - [tests](./tests): A directort that contains all the given main files for testing purposes
 
-
-
+:+1:
