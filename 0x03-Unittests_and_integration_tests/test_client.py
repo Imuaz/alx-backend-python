@@ -10,26 +10,24 @@ from parameterized import parameterized
 
 class TestGithubOrgClient(unittest.TestCase):
     '''class for github.org client'''
-    @parameterized.expand([
+     @parameterized.expand([
         ("google",),
         ("abc",),
     ])
-    @patch('client.get_json', return_value={'login': 'example_org'})
-    def test_org(self, org_name, mock_get_json):
-        '''test the correct result'''
+    @patch('your_module.GithubOrgClient.get_org', return_value={'login': 'example_org'})
+    def test_org(self, org_name, mock_get_org):
         org_client = GithubOrgClient(org_name)
         result = org_client.get_org()
         expected_url = GithubOrgClient.ORG_URL.format(org=org_name)
-        mock_get_json.assert_called_once_with(expected_url)
+        mock_get_org.assert_called_once_with(expected_url)
         self.assertEqual(result, {'login': 'example_org'})
 
     @parameterized.expand([
         ("google",),
         ("abc",),
     ])
-    @patch('client.get_json', return_value=[{'name': 'repo1'}, {'name': 'repo2'}])
+    @patch('your_module.get_json', return_value=[{'name': 'repo1'}, {'name': 'repo2'}])
     def test_repos_payload(self, org_name, mock_get_json):
-        '''test the public repo'''
         org_client = GithubOrgClient(org_name)
         result = org_client.repos_payload()
         expected_url = org_client._public_repos_url
