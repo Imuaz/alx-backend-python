@@ -3,8 +3,9 @@
 Unittests and Integration Tests Module
 '''
 import unittest
+from unittest import mock
 from client import *
-from unittest.mock import patch, mock
+from unittest.mock import patch, Mock
 from parameterized import parameterized
 
 
@@ -15,7 +16,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("abc",),
     ])
     def test_org(self, input):
-        with mock.patch('your_module.get_json') as mock_get_json:
+        with mock.patch('client.get_json') as mock_get_json:
             GithubOrgClient.ORG_URL = input
             org_client = GithubOrgClient(input)
             org_client.org()
