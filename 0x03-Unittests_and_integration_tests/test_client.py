@@ -17,6 +17,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json', new_callable=Mock)
     def test_org(self, input, mock_get_json):
+        '''test for an expected result'''
         GithubOrgClient.ORG_URL = input
         org_client = GithubOrgClient(input)
         org_client.org()
