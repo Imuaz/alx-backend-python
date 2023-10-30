@@ -47,7 +47,9 @@ class TestGithubOrgClient(unittest.TestCase):
 
 
 def get_payload(name):
+    '''gets the payload'''
     def getPayload(url):
+        '''get the payload'''
         return Mock(json=lambda: name)
     return getPayload
 
@@ -57,11 +59,11 @@ def get_payload(name):
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test"""
+    '''ntegration test'''
 
     @classmethod
     def setUpClass(cls):
-        """Set up class function"""
+        '''Set up class function'''
         get_fixtures = {'name':
                         [
                             cls.org_payload, cls.repos_payload,
@@ -73,7 +75,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.start()
 
     def test_public_repos_with_license(self):
-        """Test public repos with license"""
+        '''Test public repos with license'''
         self.assertTrue(True)
 
     @classmethod
