@@ -21,3 +21,10 @@ class TestGithubOrgClient(unittest.TestCase):
         GithubOrgClient.ORG_URL = input
         org_client = GithubOrgClient(input)
         org_client.org()
+
+    @patch('client.GithubOrgClient.public_repos', return_value='github.com')
+    def test_public_repos(self, mock_method):
+        '''Tests public repositoey'''
+        result = GithubOrgClient.public_repos()
+        self.assertEqual(result, 'github.com')
+        mock_method.assert_called_once()
