@@ -14,7 +14,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    @patch('your_module.GithubOrgClient.get_org', return_value={'login': 'example_org'})
+    @patch('client.GithubOrgClient.get_org', return_value={'login': 'example_org'})
     def test_org(self, org_name, mock_get_org):
         org_client = GithubOrgClient(org_name)
         result = org_client.get_org()
@@ -26,7 +26,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    @patch('your_module.get_json', return_value=[{'name': 'repo1'}, {'name': 'repo2'}])
+    @patch('client.get_json', return_value=[{'name': 'repo1'}, {'name': 'repo2'}])
     def test_repos_payload(self, org_name, mock_get_json):
         org_client = GithubOrgClient(org_name)
         result = org_client.repos_payload()
