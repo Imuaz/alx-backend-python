@@ -51,14 +51,23 @@ def get_payload(name):
         return Mock(json=lambda: name)
     return getPayload
 
-@parameterized_class("name", TEST_PAYLOAD)
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    TEST_PAYLOAD
+)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Integration test"""
 
     @classmethod
     def setUpClass(cls):
         """Set up class function"""
-        cls.get_patcher = patch("requests.get", side_effect=get_payload(cls.name))
+        config = {'name':
+                  [
+                      cls.org_payload, cls.repos_payload,
+                      cls.org_payload, cls.repos_payload
+                  ]
+                  }
+        cls.get_patcher = patch("requests.get", side_effect=get_payload(**config))
         cls.get_patcher.start()
 
     def test_public_repos_with_license(self):
