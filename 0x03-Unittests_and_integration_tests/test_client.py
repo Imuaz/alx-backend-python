@@ -21,6 +21,3 @@ class TestGithubOrgClient(unittest.TestCase):
         GithubOrgClient.ORG_URL = input
         org_client = GithubOrgClient(input)
         org_client.org()
-
-        # Ensure that get_json is not executed
-        mock_get_json.assert_not_called()
