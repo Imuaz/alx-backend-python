@@ -10,7 +10,7 @@ from parameterized import parameterized
 
 class TestGithubOrgClient(unittest.TestCase):
     '''class for github.org client'''
-     @parameterized.expand([
+    @parameterized.expand([
         ("google",),
         ("abc",),
     ])
