@@ -16,7 +16,6 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
-
     def test_access_nested_map(self, nested_map, path, expected_result):
         '''test wheather the method return as expected'''
         result = access_nested_map(nested_map, path)
@@ -39,7 +38,6 @@ class TestGetJson(unittest.TestCase):
             ("http://example.com", {"payload": True}),
             ("http://holberton.io", {"payload": False}),
         ])
-
     @patch('requests.get')
     def test_get_json(self, test_url, test_payload, mock_get):
         '''checks the expected result'''
