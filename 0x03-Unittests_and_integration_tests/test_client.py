@@ -48,28 +48,24 @@ class TestGithubOrgClient(unittest.TestCase):
 
 def get_payload(name):
     def getPayload(url):
-        return mock.Mock(**{name: TEST_PAYLOAD[0][0]})
+        return Mock(json=lambda: name)
     return getPayload
 
 @parameterized_class("name", TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''Integration test'''
+    """Integration test"""
 
     @classmethod
     def setUpClass(cls):
-        '''Set up class function'''
-        cls.get_patcher = mock.patch("requests.get", side_effect=get_payload(cls.name))
+        """Set up class function"""
+        cls.get_patcher = patch("requests.get", side_effect=get_payload(cls.name))
         cls.get_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
-        '''Tear down class module'''
+        """Tear down class module"""
         cls.get_patcher.stop()
 
     def test_public_repos_with_license(self):
-        '''Test public repos with license'''
-        self.assertTrue(True)
-
-    def test_public_repos(self):
-        '''Test public repos'''
+        """Test public repos with license"""
         self.assertTrue(True)
