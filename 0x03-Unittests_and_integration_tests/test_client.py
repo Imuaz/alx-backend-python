@@ -23,7 +23,7 @@ class TestGithubOrgClient(unittest.TestCase):
         org_client = GithubOrgClient(input)
         org_client.org()
 
-    @patch('client.GithubOrgClient._public_repos_url', return_value='github.com')
+    @patch('client.GithubOrgClient._public_repos_url', r_value='github.com')
     def test_public_repos_url(self, mock_method):
         '''Test public repositorys  url'''
         self.assertEqual(GithubOrgClient._public_repos_url, mock_method)
@@ -51,6 +51,7 @@ def get_payload(name):
         return Mock(json=lambda: name)
     return getPayload
 
+
 @parameterized_class(
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
     TEST_PAYLOAD
@@ -62,12 +63,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def setUpClass(cls):
         """Set up class function"""
         get_fixtures = {'name':
-                  [
-                      cls.org_payload, cls.repos_payload,
-                      cls.org_payload, cls.repos_payload
-                  ]
-                  }
-        cls.get_patcher = patch("requests.get", side_effect=get_payload(**get_fixtures))
+                        [
+                            cls.org_payload, cls.repos_payload,
+                            cls.org_payload, cls.repos_payload
+                        ]
+                        }
+        cls.get_patcher = patch(
+            "requests.get", side_effect=get_payload(**get_fixtures))
         cls.get_patcher.start()
 
     def test_public_repos_with_license(self):
