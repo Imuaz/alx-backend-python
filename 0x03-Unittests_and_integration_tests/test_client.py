@@ -4,7 +4,7 @@ Unittests and Integration Tests Module
 '''
 import unittest
 from client import *
-from unittest.mock import patch, Mock
+from unittest.mock import patch, mock
 from parameterized import parameterized
 
 
@@ -14,22 +14,10 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    @patch('GithubOrgClient.get_org', return_value={'login': 'example_org'})
-    def test_org(self, org_name, mock_get_org):
-        org_client = GithubOrgClient(org_name)
-        result = org_client.get_org()
-        expected_url = GithubOrgClient.ORG_URL.format(org=org_name)
-        mock_get_org.assert_called_once_with(expected_url)
-        self.assertEqual(result, {'login': 'example_org'})
-
-    @parameterized.expand([
-        ("google",),
-        ("abc",),
-    ])
-    @patch('client.get_json', return_value=[{'name': 'repo1'}, {'name': 'repo2'}])
-    def test_repos_payload(self, org_name, mock_get_json):
-        org_client = GithubOrgClient(org_name)
-        result = org_client.repos_payload()
-        expected_url = org_client._public_repos_url
-        mock_get_json.assert_called_once_with(expected_url)
-        self.assertEqual(result, [{'name': 'repo1'}, {'name': 'repo2'}])
+    def test_org(self, input):
+        with mock.patch('your_module.get_json') as mock_get_json:
+            GithubOrgClient.ORG_URL = input
+            org_client = GithubOrgClient(input)
+            org_client.org()
+            expected_url = f'https://api.github.com/orgs/{input}'
+            mock_get_json.assert_called_once_with(expected_url)
