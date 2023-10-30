@@ -7,7 +7,7 @@ from unittest import mock
 from client import *
 from unittest.mock import patch, Mock
 from fixtures import TEST_PAYLOAD
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -45,33 +45,31 @@ class TestGithubOrgClient(unittest.TestCase):
         result = org_client.has_license(repo, license_key)
         self.assertEqual(result, expected_result)
 
+
+def get_payload(name):
+    def getPayload(url):
+        return mock.Mock(**{name: TEST_PAYLOAD[0][0]})
+    return getPayload
+
+@parameterized_class("name", TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''ntegration test'''
+    '''Integration test'''
 
     @classmethod
-    def setUpClass(cls) -> None:
+    def setUpClass(cls):
         '''Set up class function'''
-        def getPayload(url):
-            return mock.Mock({cls.name: cls.value})
-        cls.get_patcher = patch("requests.get", side_effect=getPayload)
+        cls.get_patcher = mock.patch("requests.get", side_effect=get_payload(cls.name))
         cls.get_patcher.start()
 
     @classmethod
-    def tearDownClass(cls) -> None:
+    def tearDownClass(cls):
         '''Tear down class module'''
         cls.get_patcher.stop()
 
-def create_integration_test_class(test_data):
-    '''intergration access'''
-    class IntegrationTest(TestIntegrationGithubOrgClient):
-        org_payload, repos_payload, expected_repos, apache2_repos = test_data
+    def test_public_repos_with_license(self):
+        '''Test public repos with license'''
+        self.assertTrue(True)
 
-        def test_public_repos_with_license(self):
-            '''Test public repos with license'''
-            self.assertTrue(True)
-
-        def test_public_repos(self):
-            '''Test public repos'''
-            self.assertTrue(True)
-
-    return IntegrationTest
+    def test_public_repos(self):
+        '''Test public repos'''
+        self.assertTrue(True)
