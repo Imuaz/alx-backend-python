@@ -61,13 +61,13 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up class function"""
-        config = {'name':
+        get_fixtures = {'name':
                   [
                       cls.org_payload, cls.repos_payload,
                       cls.org_payload, cls.repos_payload
                   ]
                   }
-        cls.get_patcher = patch("requests.get", side_effect=get_payload(**config))
+        cls.get_patcher = patch("requests.get", side_effect=get_payload(**get_fixtures))
         cls.get_patcher.start()
 
     def test_public_repos_with_license(self):
