@@ -61,11 +61,11 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher = patch("requests.get", side_effect=get_payload(cls.name))
         cls.get_patcher.start()
 
-    @classmethod
-    def tearDownClass(cls):
-        """Tear down class module"""
-        cls.get_patcher.stop()
-
     def test_public_repos_with_license(self):
         """Test public repos with license"""
         self.assertTrue(True)
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Teardownclass'''
+        cls.get_patcher.stop()
