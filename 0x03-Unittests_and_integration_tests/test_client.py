@@ -14,7 +14,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    @patch('client.GithubOrgClient.get_org', return_value={'login': 'example_org'})
+    @patch('GithubOrgClient.get_org', return_value={'login': 'example_org'})
     def test_org(self, org_name, mock_get_org):
         org_client = GithubOrgClient(org_name)
         result = org_client.get_org()
