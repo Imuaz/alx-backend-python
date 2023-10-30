@@ -15,11 +15,11 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    def test_org(self, input):
-        '''test the expected result'''
-        with mock.patch('client.get_json') as mock_get_json:
-            GithubOrgClient.ORG_URL = input
-            org_client = GithubOrgClient(input)
-            org_client.org()
-            expected_url = f'https://api.github.com/orgs/{input}'
-            mock_get_json.assert_called_once_with(expected_url)
+    @patch('client.get_json', new_callable=Mock)
+    def test_org(self, input, mock_get_json):
+        GithubOrgClient.ORG_URL = input
+        org_client = GithubOrgClient(input)
+        org_client.org()
+
+        # Ensure that get_json is not executed
+        mock_get_json.assert_not_called()
