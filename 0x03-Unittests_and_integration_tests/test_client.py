@@ -3,8 +3,6 @@
 Unittests and Integration Tests Module
 '''
 import unittest
-import requests
-from unittest import mock
 from client import *
 from unittest.mock import patch, Mock
 from fixtures import TEST_PAYLOAD
@@ -46,35 +44,37 @@ class TestGithubOrgClient(unittest.TestCase):
         result = org_client.has_license(repo, license_key)
         self.assertEqual(result, expected_result)
 
-def get_payload(name):
-    '''gets the payload'''
-    return mock.Mock(name)
 
 @parameterized_class(
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''Integration test'''
+    '''Integration test for GithubOrgClient'''
 
     @classmethod
-    def setUpClass(cls) -> None:
-        '''Set up class function'''
-        get_fixtures = {'name':
-                        [
-                            cls.org_payload, cls.repos_payload,
-                            cls.org_payload, cls.repos_payload
-                        ]
-                        }
-        cls.get_patcher = patch(
-            "requests.get", side_effect=get_payload(**get_fixtures))
-        cls.get_patcher.start()
-
-    def test_public_repos_with_license(self):
-        '''Test public repos with license'''
-        self.assertTrue(True)
+    def setUpClass(cls):
+        '''Set up the class'''
+        cls.get_patcher = patch('requests.get', side_effect=cls.side_effect)
+        cls.mock = cls.get_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
-        '''Teardownclass'''
+        '''Tear down the class'''
         cls.get_patcher.stop()
+
+    @classmethod
+    def side_effect(cls, url):
+        if url == "https://api.github.com/orgs/google":
+            return cls.org_payload
+        return cls.repos_payload
+
+    def test_public_repos(self):
+        '''Integration test: public repos'''
+        test_class = GithubOrgClient("google")
+        self.assertTrue(True)
+
+    def test_public_repos_with_license(self):
+        '''Integration test for public repos with License'''
+        test_class = GithubOrgClient("google")
+        self.assertTrue(True)
