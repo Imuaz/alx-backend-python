@@ -3,6 +3,7 @@
 Unittests and Integration Tests Module
 '''
 import unittest
+import requests
 from unittest import mock
 from client import *
 from unittest.mock import patch, Mock
