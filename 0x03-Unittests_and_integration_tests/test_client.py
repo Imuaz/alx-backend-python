@@ -45,24 +45,19 @@ class TestGithubOrgClient(unittest.TestCase):
         result = org_client.has_license(repo, license_key)
         self.assertEqual(result, expected_result)
 
-
 def get_payload(name):
     '''gets the payload'''
-    def getPayload(url):
-        '''get the payload'''
-        return Mock(json=lambda: name)
-    return getPayload
-
+    return mock.Mock(name)
 
 @parameterized_class(
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    '''ntegration test'''
+    '''Integration test'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         '''Set up class function'''
         get_fixtures = {'name':
                         [
